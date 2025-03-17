@@ -16,5 +16,5 @@ function countEvenOddRandom(count) {
       let oddPercentage = ((oddCount / count) * 100).toFixed(2);
     
 }
-console.log(`Кількість парних чисел: ${evenCount}`);
-console.log(`Кількість непарних чисел: ${oddCount}`); 
+console.log(${evenCount});
+console.log(${oddCount}); 
