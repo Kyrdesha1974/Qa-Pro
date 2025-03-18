@@ -1,20 +1,29 @@
-function countEvenOddRandom(count) {
-    let evenCount = 0;
-    let oddCount = 0;
+var services = {
+  "стрижка": "60 грн",
+  "гоління": "80 грн",
+  "Миття голови": "100 грн"
+};
 
- function getRandom(min, max){
-    return Math.floor(Math.random()* (max - min + 1))} 
+class ServicePricing {
+  constructor(services) {
+    this.services = services;
+  }
+  price() {
     
+    return Object.values(this.services)
+      .map(price => parseInt(price)) 
+      .reduce((total, price) => total + price, 0); 
+  }
+  minPrice() {
 
-    for (let i = 0; i < count; i++)
-     {
-    let randomValue = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;}
-    let randomValue = Math.random();
-    if (randomValue % 2 === 0);
-     
-      let evenPercentage = ((evenCount / count) * 100).toFixed(2);
-      let oddPercentage = ((oddCount / count) * 100).toFixed(2);
+    return Math.min(...Object.values(this.services).map(price => parseInt(price)));
+  }
+  maxPrice() {
     
+    return Math.max(...Object.values(this.services).map(price => parseInt(price)));
+  }
 }
-console.log(`Кількість парних чисел: ${evenCount}`);
-console.log(`Кількість непарних чисел: ${oddCount}`); 
+const servicePricing = new ServicePricing(services);
+console.log("Загальна вартість послуг:",servicePricing.price());  
+console.log("Мінімальна ціна:",servicePricing.minPrice());       
+console.log("Максимальна ціна:",servicePricing.maxPrice());  
