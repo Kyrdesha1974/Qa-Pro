@@ -1,29 +1,4 @@
-var services = {
-  "стрижка": "60 грн",
-  "гоління": "80 грн",
-  "Миття голови": "100 грн"
-};
-
-class ServicePricing {
-  constructor(services) {
-    this.services = services;
-  }
-  price() {
-    
-    return Object.values(this.services)
-      .map(price => parseInt(price)) 
-      .reduce((total, price) => total + price, 0); 
-  }
-  minPrice() {
-
-    return Math.min(...Object.values(this.services).map(price => parseInt(price)));
-  }
-  maxPrice() {
-    
-    return Math.max(...Object.values(this.services).map(price => parseInt(price)));
-  }
-}
-const servicePricing = new ServicePricing(services);
-console.log("Загальна вартість послуг:",servicePricing.price());  
-console.log("Мінімальна ціна:",servicePricing.minPrice());       
-console.log("Максимальна ціна:",servicePricing.maxPrice());  
+const text = "Time, Task, Apple, Wonderful, Joyful, Happiness"
+const regex = /\b[^aA\s]{6,}\b/g;
+const result = text.match(regex);
+console.log(result);
