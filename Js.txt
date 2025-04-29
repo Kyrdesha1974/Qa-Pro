@@ -1,0 +1,4 @@
+const text = "Time, Task, Apple, Wonderful, Joyful, Happiness"
+const regex = /\b[^aA\s]{6,}\b/g;
+const result = text.match(regex);
+console.log(result);
