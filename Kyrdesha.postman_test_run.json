@@ -1,0 +1,211 @@
+{
+	"id": "90609f15-a5a8-474f-856b-d59c23535be7",
+	"name": "Anastasiia Kyrdesha",
+	"timestamp": "2025-05-03T17:49:56.937Z",
+	"collection_id": "40284268-dbbcdf9d-74a8-42cb-89ed-31bce2b25977",
+	"folder_id": 0,
+	"environment_id": "40284268-0ca80976-f649-4c57-8eda-f6e8a55d2a7d",
+	"totalPass": 27,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-05-03T17:49:48.128Z",
+	"totalFail": 3,
+	"results": [
+		{
+			"id": "20740733-4ae9-4212-863e-1968cb83ca1e",
+			"name": "signup.qauto",
+			"url": "https://qauto.forstudy.space/api/auth/signup",
+			"time": 77,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Checking the expected result": true
+			},
+			"testPassFailCounts": {
+				"Checking the expected result": {
+					"pass": 7,
+					"fail": 3
+				}
+			},
+			"times": [
+				385,
+				77,
+				147,
+				146,
+				141,
+				154,
+				158,
+				136,
+				101,
+				77
+			],
+			"allTests": [
+				{
+					"Checking the expected result": false
+				},
+				{
+					"Checking the expected result": true
+				},
+				{
+					"Checking the expected result": true
+				},
+				{
+					"Checking the expected result": true
+				},
+				{
+					"Checking the expected result": false
+				},
+				{
+					"Checking the expected result": false
+				},
+				{
+					"Checking the expected result": true
+				},
+				{
+					"Checking the expected result": true
+				},
+				{
+					"Checking the expected result": true
+				},
+				{
+					"Checking the expected result": true
+				}
+			]
+		},
+		{
+			"id": "e57886e7-06ab-4dae-882c-ec846a802f91",
+			"name": "auth.signin",
+			"url": "https://qauto.forstudy.space/api/auth/signin",
+			"time": 444,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				489,
+				71,
+				73,
+				88,
+				452,
+				448,
+				511,
+				541,
+				500,
+				444
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"id": "8e7ccd2c-f367-4e76-a9e4-e75394a089e5",
+			"name": "users.profile",
+			"url": "https://qauto.forstudy.space/api/users/profile",
+			"time": 163,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Checking the textual reason for the status of the responseі": true,
+				"Checking that the photo is in the correct format": true
+			},
+			"testPassFailCounts": {
+				"Checking the textual reason for the status of the responseі": {
+					"pass": 10,
+					"fail": 0
+				},
+				"Checking that the photo is in the correct format": {
+					"pass": 10,
+					"fail": 0
+				}
+			},
+			"times": [
+				68,
+				168,
+				106,
+				79,
+				130,
+				164,
+				193,
+				148,
+				167,
+				163
+			],
+			"allTests": [
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				},
+				{
+					"Checking the textual reason for the status of the responseі": true,
+					"Checking that the photo is in the correct format": true
+				}
+			]
+		}
+	],
+	"count": 10,
+	"totalTime": 6525,
+	"collection": {
+		"requests": [
+			{
+				"id": "20740733-4ae9-4212-863e-1968cb83ca1e",
+				"method": "POST"
+			},
+			{
+				"id": "e57886e7-06ab-4dae-882c-ec846a802f91",
+				"method": "POST"
+			},
+			{
+				"id": "8e7ccd2c-f367-4e76-a9e4-e75394a089e5",
+				"method": "PUT"
+			}
+		]
+	}
+}
