@@ -14,7 +14,7 @@
 					"script": {
 						"exec": [
 							"const res = pm.response.json();\r",
-							"const expected = data.expected;\r",
+							"const expected = pm.iterationData.get(\"expected\");\r",
 							"\r",
 							"pm.test(\"Checking the expected result\", () => {\r",
 							"    if (expected === \"valid\") {\r",
