@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "dbbcdf9d-74a8-42cb-89ed-31bce2b25977",
+		"name": "Anastasiia Kyrdesha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40284268"
+	},
+	"item": [
+		{
+			"name": "signup.qauto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"const expected = data.expected;\r",
+							"\r",
+							"pm.test(\"Checking the expected result\", () => {\r",
+							"    if (expected === \"valid\") {\r",
+							"        pm.expect(pm.response.code).to.equal(200);\r",
+							"        pm.expect(res.data).to.have.property(\"userId\");\r",
+							"    } else {\r",
+							"        pm.expect(pm.response.code).to.equal(400);\r",
+							"        pm.expect(res.message || res.errors).to.exist;\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{name}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{repeatPassword}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/auth/signup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth.signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"remember\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/signin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users.profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"const expectedStatus = data.expected_status;\r",
+							"const criticalErrorStatuses = [400, 401, 403];\r",
+							"\r",
+							"pm.test(\"Checking the textual reason for the status of the responseі\", () => {\r",
+							"    if (pm.response.statusText) {\r",
+							"        pm.expect(pm.response.statusText).to.equal(getStatusReason(expectedStatus));\r",
+							"    } else {\r",
+							"        console.warn(\"Warning: Status text is undefined in the response.\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checking that the photo is in the correct format\", function () {\r",
+							"    if (res.data && res.data.photoFilename) {\r",
+							"        const photo = res.data.photoFilename;\r",
+							"        pm.expect(photo.endsWith('.jpg') || photo.endsWith('.png') || photo.endsWith('.jpeg') || photo.endsWith('.gif')).to.be.true;\r",
+							"    } else {\r",
+							"        console.warn(\"The photoFilename field was not found in the response.\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"if (expectedStatus === 200) {\r",
+							"    pm.test(\"Verifying successful profile update\", () => {\r",
+							"        pm.expect(res.name).to.equal(data.name);\r",
+							"        pm.expect(res.lastName).to.equal(data.lastName);\r",
+							"        pm.expect(res.dateBirth).to.equal(data.dateBirth);\r",
+							"        pm.expect(res.country).to.equal(data.country);\r",
+							"    });\r",
+							"} else if (expectedStatus === 400) {\r",
+							"    pm.test(\"Error checking for invalid profile data\", () => {\r",
+							"        pm.expect(res).to.have.property(\"status\").that.equals(\"error\");\r",
+							"        pm.expect(res).to.have.property(\"message\").that.is.a(\"string\").and.not.empty;\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"if (criticalErrorStatuses.includes(pm.response.code)) {\r",
+							"    console.error(\"Critical error detected! Stopping further tests.\");\r",
+							"    postman.setNextRequest(null);\r",
+							"}\r",
+							"\r",
+							"function getStatusReason(code) {\r",
+							"    switch (code) {\r",
+							"        case 200: return \"OK\";\r",
+							"        case 400: return \"Bad Request\";\r",
+							"        case 401: return \"Unauthorized\";\r",
+							"        case 403: return \"Forbidden\";\r",
+							"        default: return \"Unknown Status\";\r",
+							"    }\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"photo\": \"photo.png\",\r\n  \"name\": \"{{name}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"dateBirth\": \"{{dateBirth}}\",\r\n  \"country\": \"{{country}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/users/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users.password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const requestBody = JSON.parse(pm.request.body.raw);\r",
+							"const storedUserId = pm.environment.get(\"userId\");\r",
+							"\r",
+							"pm.test(\"userId відповідає ID створеного користувача\", () => {\r",
+							"    pm.environment.set(\"userId\", responseBody.data?.userId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"oldPassword\": \"{{password}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"repeatPassword\": \"{{newPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/password",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Logout пройшов успішно\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const res = pm.response.json();\r",
+							"    pm.expect(res.message || res.status).to.be.oneOf([\"ok\", \"success\", \"logged out\"]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/logout",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New car",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"carBrandId\": 1,\r\n  \"carModelId\": 2,\r\n  \"mileage\": 125\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/cars",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cost",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let lastMileage = parseInt(pm.environment.get(\"lastMileage\")) || 100;\r",
+							"let nextMileage = lastMileage + 10; // додаємо 10 км\r",
+							"\r",
+							"pm.environment.set(\"nextMileage\", nextMileage);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const latestExpense = pm.response.json();\r",
+							"pm.environment.set(\"lastMileage\", latestExpense.mileage);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"carId\": 36236,\r\n  \"reportedAt\": \"2025-04-07\",\r\n  \"mileage\": 159,\r\n  \"liters\": 13,\r\n  \"totalCost\": 13,\r\n  \"forceMileage\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/expenses",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"expenses"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://qauto.forstudy.space/api/expenses' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"carId\": 1,\r\n  \"reportedAt\": \"2021-05-17\",\r\n  \"mileage\": 111,\r\n  \"liters\": 11,\r\n  \"totalCost\": 11,\r\n  \"forceMileage\": false\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "name",
+			"value": "Jon",
+			"type": "default"
+		},
+		{
+			"key": "lastName",
+			"value": "Didi",
+			"type": "default"
+		},
+		{
+			"key": "password",
+			"value": "Qwerty12345",
+			"type": "default"
+		},
+		{
+			"key": "repeatPassword",
+			"value": "Qwerty12345",
+			"type": "default"
+		},
+		{
+			"key": "{{url}}",
+			"value": "https://qauto.forstudy.space/api",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "valid1@test.com",
+			"type": "default"
+		},
+		{
+			"key": "photo",
+			"value": "user-1621352948855.jpg",
+			"type": "default"
+		},
+		{
+			"key": "dateBirth",
+			"value": "2021-03-17T15:21:05.000Z",
+			"type": "default"
+		},
+		{
+			"key": "country",
+			"value": "Ukraine",
+			"type": "default"
+		},
+		{
+			"key": "newPassword",
+			"value": "Qwerty33327",
+			"type": "default"
+		}
+	]
+}
